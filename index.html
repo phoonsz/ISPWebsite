@@ -4,854 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PhoonNet — Internet Fibra</title>
-    <style>
-        :root {
-            --bg-deep: #f0f4f8;
-            --bg-card: #ffffff;
-            --bg-elevated: #f8fafc;
-            --border-subtle: #dce5ec;
-            --border-hover: #b8ccdb;
-            --text-primary: #1a2639;
-            --text-secondary: #3d516b;
-            --text-muted: #6b829e;
-            --accent-glow: rgba(99, 139, 176, 0.12);
-            --accent-line: #a0c4db;
-            --white-soft: #ffffff;
-            --pastel-blue: #d0e3f0;
-            --pastel-blue-hover: #b8d3e5;
-            --pastel-blue-dark: #5b89a6;
-            --pastel-blue-light: #e6f0f7;
-            --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-            --transition-smooth: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-            --transition-sidebar: 0.4s cubic-bezier(0.22, 0.61, 0.36, 1);
-            --font-stack: 'Segoe UI', 'Arial Rounded MT Bold', 'Helvetica Rounded', Arial, sans-serif;
-            --nav-height: 4.5rem;
-            --border-radius: 1rem;
-            --border-radius-sm: 0.6rem;
-            --shadow-card: 0 8px 30px rgba(80, 110, 140, 0.08);
-            --shadow-card-hover: 0 20px 50px rgba(80, 110, 140, 0.15), 0 0 0 1px rgba(99, 139, 176, 0.15) inset;
-        }
-
-        *,
-        *::before,
-        *::after {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        /* Force scrollbar always visible to prevent horizontal navbar shift */
-        html {
-            overflow-y: scroll;
-            background-color: var(--bg-deep);
-        }
-
-        /* Flex layout to push footer to bottom */
-        body {
-            font-family: var(--font-stack);
-            background-color: var(--bg-deep);
-            color: var(--text-primary);
-            line-height: 1.6;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            overflow-x: hidden;
-            font-weight: 400;
-            padding-top: var(--nav-height);
-        }
-
-        /* Make main content take remaining space */
-        .main-content {
-            flex: 1 0 auto;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-            width: 100%;
-        }
-
-        /* Footer stays at bottom */
-        .site-footer {
-            flex-shrink: 0;
-            border-top: 1px solid #dce5ec;
-            padding: 2.5rem 0;
-            margin-top: 2rem;
-            background: #ffffff;
-        }
-
-        /* Sidebar overlay and panel (unchanged) */
-        .sidebar-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(15, 25, 40, 0.45);
-            z-index: 90;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity var(--transition-sidebar);
-            -webkit-tap-highlight-color: transparent;
-        }
-        .sidebar-overlay.active {
-            opacity: 1;
-            pointer-events: all;
-        }
-
-        .sidebar {
-            position: fixed;
-            top: 0;
-            right: 0;
-            width: min(300px, 80vw);
-            height: 100vh;
-            height: 100dvh;
-            background: #ffffff;
-            border-left: 1px solid #dce5ec;
-            z-index: 100;
-            transform: translateX(100%);
-            transition: transform var(--transition-sidebar);
-            display: flex;
-            flex-direction: column;
-            padding: 1.5rem 1.25rem;
-            will-change: transform;
-            box-shadow: -5px 0 25px rgba(70, 90, 110, 0.08);
-        }
-        .sidebar.active {
-            transform: translateX(0);
-        }
-        .sidebar-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 2.5rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid #e2ebf2;
-        }
-        .sidebar-logo {
-            font-size: 1.25rem;
-            font-weight: 700;
-            letter-spacing: 0.02em;
-            color: #1a2639;
-            text-decoration: none;
-        }
-        .sidebar-logo span {
-            color: #5b89a6;
-            font-weight: 500;
-        }
-        .sidebar-close {
-            width: 2.5rem;
-            height: 2.5rem;
-            border: 1px solid #dce5ec;
-            background: #f8fafc;
-            color: #3d516b;
-            font-size: 1.3rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            transition: all var(--transition-fast);
-            -webkit-tap-highlight-color: transparent;
-            touch-action: manipulation;
-            font-weight: 500;
-        }
-        .sidebar-close:active {
-            background: #e6f0f7;
-            border-color: #b8ccdb;
-        }
-        .sidebar-nav {
-            display: flex;
-            flex-direction: column;
-            gap: 0.25rem;
-        }
-        .sidebar-nav a {
-            display: block;
-            padding: 0.9rem 1rem;
-            color: #3d516b;
-            text-decoration: none;
-            font-size: 1rem;
-            letter-spacing: 0.02em;
-            border-radius: var(--border-radius-sm);
-            transition: all var(--transition-fast);
-            -webkit-tap-highlight-color: transparent;
-            touch-action: manipulation;
-            font-weight: 500;
-            cursor: pointer;
-        }
-        .sidebar-nav a:hover,
-        .sidebar-nav a:active {
-            background: #e6f0f7;
-            color: #1a2639;
-        }
-        .sidebar-nav a.nav-cta {
-            margin-top: 0.75rem;
-            background: #5b89a6;
-            color: #ffffff;
-            text-align: center;
-            font-weight: 600;
-            border-radius: var(--border-radius-sm);
-            padding: 0.9rem 1rem;
-            letter-spacing: 0.03em;
-        }
-        .sidebar-nav a.nav-cta:active {
-            background: #4a758f;
-        }
-        .sidebar-footer-info {
-            margin-top: auto;
-            padding-top: 1.5rem;
-            border-top: 1px solid #e2ebf2;
-            font-size: 0.8rem;
-            color: #6b829e;
-            display: flex;
-            flex-direction: column;
-            gap: 0.4rem;
-        }
-        .sidebar-footer-info a {
-            color: #3d516b;
-            text-decoration: none;
-            font-weight: 500;
-            cursor: pointer;
-        }
-
-        /* Fixed navbar with solid background */
-        .navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 80;
-            height: var(--nav-height);
-            background: #ffffff;
-            border-bottom: 1px solid #dce5ec;
-            display: flex;
-            align-items: center;
-            padding: 0 2rem;
-            box-shadow: 0 2px 15px rgba(90, 120, 150, 0.08);
-        }
-        
-        .navbar-inner {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        .nav-logo {
-            font-size: 1.3rem;
-            font-weight: 700;
-            letter-spacing: 0.03em;
-            color: #1a2639;
-            text-decoration: none;
-            white-space: nowrap;
-            cursor: pointer;
-        }
-        /* Ensure logo never gets active styling */
-        .nav-logo.active-nav {
-            background: transparent !important;
-            color: #1a2639 !important;
-        }
-        .nav-logo span {
-            font-weight: 500;
-            color: #5b89a6;
-            font-size: 0.9em;
-            letter-spacing: 0.02em;
-        }
-        .nav-links {
-            display: flex;
-            align-items: center;
-            gap: 0.6rem;
-            list-style: none;
-        }
-        .nav-links a {
-            text-decoration: none;
-            color: #3d516b;
-            font-size: 0.9rem;
-            letter-spacing: 0.02em;
-            padding: 0.5rem 1.1rem;
-            border-radius: var(--border-radius-sm);
-            transition: all var(--transition-fast);
-            font-weight: 500;
-            white-space: nowrap;
-            cursor: pointer;
-        }
-        .nav-links a:hover {
-            color: #1a2639;
-            background: #e6f0f7;
-        }
-        .nav-links a.nav-cta-btn {
-            background: #5b89a6;
-            color: #ffffff;
-            font-weight: 600;
-            border-radius: var(--border-radius-sm);
-            padding: 0.55rem 1.3rem;
-            margin-left: 0.4rem;
-            transition: all var(--transition-fast);
-            letter-spacing: 0.03em;
-        }
-        .nav-links a.nav-cta-btn:hover {
-            background: #4a758f;
-            color: #ffffff;
-        }
-
-        .hamburger {
-            display: none;
-            width: 2.6rem;
-            height: 2.6rem;
-            background: transparent;
-            border: 1px solid #dce5ec;
-            border-radius: 50%;
-            cursor: pointer;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 5px;
-            padding: 0;
-            z-index: 101;
-            transition: all var(--transition-fast);
-            -webkit-tap-highlight-color: transparent;
-            touch-action: manipulation;
-        }
-        .hamburger:active {
-            background: #e6f0f7;
-            border-color: #b8ccdb;
-        }
-        .hamburger span {
-            display: block;
-            width: 18px;
-            height: 2px;
-            background: #3d516b;
-            border-radius: 2px;
-            transition: all var(--transition-fast);
-            transform-origin: center;
-        }
-        .hamburger.active span:nth-child(1) {
-            transform: rotate(45deg) translate(2.8px, 2.8px);
-        }
-        .hamburger.active span:nth-child(2) {
-            opacity: 0;
-            transform: scaleX(0);
-        }
-        .hamburger.active span:nth-child(3) {
-            transform: rotate(-45deg) translate(2.8px, -2.8px);
-        }
-
-        /* Dynamic content area */
-        .dynamic-area {
-            min-height: 400px;
-            transition: opacity var(--transition-smooth);
-        }
-        
-        .dynamic-area.fade-out {
-            opacity: 0.5;
-        }
-        
-        .dynamic-area.fade-in {
-            animation: fadeIn var(--transition-smooth);
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* section styles (unchanged) */
-        .section-hero {
-            padding: 2rem 0 2rem;
-            text-align: center;
-        }
-        .hero-eyebrow {
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 0.18em;
-            color: var(--text-muted);
-            margin-bottom: 0.75rem;
-            font-weight: 500;
-        }
-        .hero-title {
-            font-size: clamp(2rem, 5vw, 3.2rem);
-            font-weight: 700;
-            letter-spacing: -0.01em;
-            line-height: 1.15;
-            margin-bottom: 0.6rem;
-            color: #1a2639;
-        }
-        .hero-subtitle {
-            font-size: 1.05rem;
-            color: #3d516b;
-            letter-spacing: 0.01em;
-            max-width: 500px;
-            margin: 0 auto 2.5rem;
-            font-weight: 400;
-        }
-        .hero-accent-line {
-            width: 55px;
-            height: 3px;
-            background: #a0c4db;
-            margin: 0 auto 2.5rem;
-            border-radius: 2px;
-            opacity: 0.8;
-        }
-        .plans-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-        .plan-card {
-            background: var(--bg-card);
-            border: 1px solid #dce5ec;
-            border-radius: var(--border-radius);
-            padding: 2rem 1.5rem 1.75rem;
-            text-align: left;
-            transition: all var(--transition-smooth);
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            cursor: default;
-            box-shadow: var(--shadow-card);
-        }
-        .plan-card:hover {
-            border-color: #b8ccdb;
-            background: #ffffff;
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-card-hover);
-        }
-        .plan-card.featured {
-            border-color: #b8ccdb;
-            background: #ffffff;
-            box-shadow: 0 12px 35px rgba(80, 110, 140, 0.12);
-        }
-        .plan-card.featured::before {
-            content: '';
-            position: absolute;
-            top: -1px;
-            left: 25px;
-            right: 25px;
-            height: 3px;
-            background: linear-gradient(90deg, transparent, #7fa9c7, transparent);
-            border-radius: 2px;
-            opacity: 0.8;
-        }
-        .plan-badge {
-            display: inline-block;
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 0.12em;
-            color: #ffffff;
-            background: #7fa9c7;
-            padding: 0.35rem 0.9rem;
-            border-radius: 20px;
-            margin-bottom: 1rem;
-            font-weight: 600;
-            align-self: flex-start;
-        }
-        .plan-name {
-            font-size: 1.15rem;
-            font-weight: 700;
-            letter-spacing: 0.02em;
-            margin-bottom: 0.3rem;
-            color: #1a2639;
-        }
-        .plan-speed {
-            font-size: 2.5rem;
-            font-weight: 700;
-            letter-spacing: -0.02em;
-            margin-bottom: 0.2rem;
-            color: #1a2639;
-        }
-        .plan-speed-unit {
-            font-size: 0.9rem;
-            font-weight: 500;
-            color: #6b829e;
-            letter-spacing: 0.02em;
-        }
-        .plan-price {
-            font-size: 1.6rem;
-            font-weight: 700;
-            margin: 0.75rem 0 1rem;
-            color: #1a2639;
-        }
-        .plan-price span {
-            font-size: 0.85rem;
-            font-weight: 500;
-            color: #6b829e;
-        }
-        .plan-features {
-            list-style: none;
-            margin-bottom: 1.5rem;
-            flex-grow: 1;
-        }
-        .plan-features li {
-            font-size: 0.9rem;
-            color: #3d516b;
-            padding: 0.4rem 0;
-            border-bottom: 1px solid #eef3f7;
-            letter-spacing: 0.01em;
-        }
-        .plan-features li:last-child {
-            border-bottom: none;
-        }
-        .plan-btn {
-            display: inline-block;
-            width: 100%;
-            text-align: center;
-            padding: 0.8rem 1rem;
-            border-radius: var(--border-radius-sm);
-            font-weight: 600;
-            letter-spacing: 0.03em;
-            font-size: 0.9rem;
-            text-decoration: none;
-            cursor: pointer;
-            transition: all var(--transition-fast);
-            border: 1px solid #d0e3f0;
-            background: transparent;
-            color: #3d516b;
-            -webkit-tap-highlight-color: transparent;
-            touch-action: manipulation;
-        }
-        .plan-btn:hover {
-            background: #e6f0f7;
-            border-color: #a0c4db;
-            color: #1a2639;
-        }
-        .plan-btn.primary-btn {
-            background: #5b89a6;
-            color: #ffffff;
-            border-color: #5b89a6;
-        }
-        .plan-btn.primary-btn:hover {
-            background: #4a758f;
-            border-color: #4a758f;
-            color: #ffffff;
-        }
-        .support-showcase {
-            display: flex;
-            align-items: center;
-            gap: 2.5rem;
-            margin: 2rem 0 3rem;
-            background: #ffffff;
-            border-radius: var(--border-radius);
-            padding: 2rem;
-            border: 1px solid #dce5ec;
-            box-shadow: var(--shadow-card);
-            flex-wrap: wrap;
-        }
-        .support-image {
-            flex: 1 1 250px;
-            border-radius: var(--border-radius-sm);
-            overflow: hidden;
-            background: #e6f0f7;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 220px;
-        }
-        .support-image img {
-            width: 100%;
-            height: auto;
-            display: block;
-            object-fit: cover;
-            border-radius: var(--border-radius-sm);
-        }
-        .support-text {
-            flex: 1 1 280px;
-        }
-        .support-text h3 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #1a2639;
-            margin-bottom: 0.75rem;
-            letter-spacing: -0.01em;
-        }
-        .support-text p {
-            color: #3d516b;
-            font-size: 0.95rem;
-            line-height: 1.6;
-            margin-bottom: 1.25rem;
-        }
-        .support-features-list {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-        }
-        .support-features-list li {
-            font-size: 0.9rem;
-            color: #3d516b;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        .support-features-list li::before {
-            content: '✓';
-            color: #5b89a6;
-            font-weight: 700;
-            font-size: 1rem;
-        }
-        .section {
-            padding: 2rem 0;
-        }
-        .section-label {
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.18em;
-            color: #6b829e;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
-        }
-        .section-title {
-            font-size: clamp(1.6rem, 3vw, 2.3rem);
-            font-weight: 700;
-            letter-spacing: -0.01em;
-            margin-bottom: 1rem;
-            color: #1a2639;
-        }
-        .section-divider {
-            width: 45px;
-            height: 3px;
-            background: #a0c4db;
-            opacity: 0.7;
-            margin-bottom: 2rem;
-            border-radius: 2px;
-        }
-        .section-body {
-            color: #3d516b;
-            max-width: 650px;
-            font-size: 1rem;
-            letter-spacing: 0.01em;
-            line-height: 1.7;
-        }
-        .timeline {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-            margin-top: 1rem;
-        }
-        .timeline-item {
-            display: flex;
-            gap: 1.25rem;
-            align-items: flex-start;
-        }
-        .timeline-dot {
-            flex-shrink: 0;
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: #7fa9c7;
-            margin-top: 0.4rem;
-            opacity: 0.8;
-        }
-        .timeline-content h4 {
-            font-size: 1rem;
-            font-weight: 700;
-            letter-spacing: 0.02em;
-            color: #1a2639;
-            margin-bottom: 0.2rem;
-        }
-        .timeline-content p {
-            font-size: 0.9rem;
-            color: #3d516b;
-            letter-spacing: 0.01em;
-        }
-        .contact-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-            align-items: start;
-        }
-        .contact-info-block {
-            display: flex;
-            flex-direction: column;
-            gap: 1.25rem;
-        }
-        .contact-item {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            font-size: 0.95rem;
-            color: #3d516b;
-            letter-spacing: 0.01em;
-        }
-        .contact-icon {
-            width: 2.5rem;
-            height: 2.5rem;
-            border-radius: 50%;
-            border: 1px solid #d0e3f0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            font-size: 1rem;
-            color: #5b89a6;
-            background: #ffffff;
-        }
-        .contact-cta-btn {
-            display: inline-block;
-            align-self: flex-start;
-            padding: 0.85rem 2.2rem;
-            background: #5b89a6;
-            color: #ffffff;
-            border-radius: var(--border-radius-sm);
-            font-weight: 600;
-            letter-spacing: 0.03em;
-            font-size: 0.95rem;
-            text-decoration: none;
-            transition: all var(--transition-fast);
-            border: none;
-            cursor: pointer;
-            -webkit-tap-highlight-color: transparent;
-            touch-action: manipulation;
-        }
-        .contact-cta-btn:hover {
-            background: #4a758f;
-        }
-        .footer-inner {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            align-items: center;
-            gap: 1.25rem;
-        }
-        .footer-left {
-            font-size: 0.85rem;
-            color: #6b829e;
-            letter-spacing: 0.02em;
-        }
-        .footer-right {
-            display: flex;
-            gap: 1.5rem;
-            flex-wrap: wrap;
-        }
-        .footer-right a {
-            font-size: 0.85rem;
-            color: #3d516b;
-            text-decoration: none;
-            letter-spacing: 0.02em;
-            transition: color var(--transition-fast);
-            font-weight: 500;
-            cursor: pointer;
-        }
-        .footer-right a:hover {
-            color: #1a2639;
-        }
-        .footer-contact-row {
-            display: flex;
-            gap: 1.5rem;
-            flex-wrap: wrap;
-            font-size: 0.85rem;
-            color: #6b829e;
-            letter-spacing: 0.01em;
-        }
-        .footer-contact-row span {
-            color: #3d516b;
-            font-weight: 500;
-        }
-        .active-nav {
-            background: #e6f0f7;
-            color: #1a2639 !important;
-            font-weight: 600;
-        }
-
-        /* Responsive */
-        @media (max-width: 900px) {
-            .plans-grid {
-                grid-template-columns: 1fr 1fr;
-                gap: 1rem;
-            }
-            .plan-card.featured {
-                grid-column: 1 / -1;
-            }
-            .contact-grid {
-                grid-template-columns: 1fr;
-            }
-            .support-showcase {
-                flex-direction: column;
-                text-align: center;
-            }
-            .support-text {
-                text-align: left;
-            }
-        }
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-            }
-            .hamburger {
-                display: flex;
-            }
-            .navbar {
-                padding: 0 1rem;
-            }
-            .main-content {
-                padding: 0 1rem;
-            }
-            .section-hero {
-                padding: 1rem 0 2rem;
-            }
-            .plans-grid {
-                grid-template-columns: 1fr;
-                gap: 0.85rem;
-            }
-            .plan-card.featured {
-                grid-column: auto;
-            }
-            .plan-card {
-                padding: 1.5rem 1.25rem 1.5rem;
-            }
-            .plan-speed {
-                font-size: 2rem;
-            }
-            .hero-title {
-                font-size: 1.8rem;
-            }
-            .footer-inner {
-                flex-direction: column;
-                text-align: center;
-                gap: 0.75rem;
-            }
-            .footer-right {
-                justify-content: center;
-                gap: 1rem;
-            }
-            .footer-contact-row {
-                justify-content: center;
-            }
-            .section {
-                padding: 1rem 0;
-            }
-            .contact-grid {
-                gap: 1.5rem;
-            }
-            .support-image {
-                min-height: 180px;
-            }
-            body {
-                padding-top: 3.8rem;
-            }
-            :root {
-                --nav-height: 3.8rem;
-            }
-        }
-        @media (max-width: 400px) {
-            .plan-card {
-                padding: 1.25rem 1rem 1.25rem;
-            }
-            .plan-speed {
-                font-size: 1.7rem;
-            }
-            .plan-price {
-                font-size: 1.3rem;
-            }
-            .hero-title {
-                font-size: 1.5rem;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
+    <!-- Sidebar overlay -->
     <div class="sidebar-overlay" id="sidebarOverlay" aria-hidden="true"></div>
 
+    <!-- Sidebar (mobile) -->
     <aside class="sidebar" id="sidebar" aria-label="Navegacao mobile">
         <div class="sidebar-header">
             <a href="#" class="sidebar-logo" data-page="plans">Phoon<span>Net</span></a>
@@ -871,7 +31,8 @@
         </div>
     </aside>
 
-    <header class="navbar" id="navbar">
+    <!-- Fixed navbar -->
+    <header class="navbar">
         <div class="navbar-inner">
             <a href="#" class="nav-logo" data-page="plans">Phoon<span>Net</span></a>
             <nav>
@@ -890,17 +51,19 @@
         </div>
     </header>
 
+    <!-- Dynamic main content -->
     <main class="main-content">
         <div id="dynamicContent" class="dynamic-area"></div>
     </main>
 
+    <!-- Footer (improved: more compact, better use of space) -->
     <footer class="site-footer">
         <div class="footer-inner">
             <div class="footer-left">
                 <p>&copy; 2026 PhoonNet. Todos os direitos reservados.</p>
-                <div class="footer-contact-row">
-                    <span>contato@phoonnet.com.br</span>
-                    <span>+55 (11) 91234-5678</span>
+                <div class="footer-contact">
+                    <span>📧 contato@phoonnet.com.br</span>
+                    <span>📞 +55 (11) 91234-5678</span>
                 </div>
             </div>
             <div class="footer-right">
@@ -911,6 +74,7 @@
     </footer>
 
     <script>
+        // Content definitions
         const pageContent = {
             plans: `
                 <section class="section-hero">
@@ -1017,30 +181,12 @@
                         De uma startup focada em fibra óptica a uma das principais provedoras do país — veja como construímos uma rede que conecta milhões de pessoas.
                     </p>
                     <div class="timeline">
-                        <div class="timeline-item">
-                            <div class="timeline-dot"></div>
-                            <div class="timeline-content"><h4>2015 — Fundação</h4><p>A PhoonNet nasceu em São Paulo com a missão de levar fibra óptica de qualidade a preços justos. Os engenheiros Lucas Andrade e Mariana Rocha montaram a primeira central em uma sala comercial na Paulista.</p></div>
-                        </div>
-                        <div class="timeline-item">
-                            <div class="timeline-dot"></div>
-                            <div class="timeline-content"><h4>2017 — Primeira rede metropolitana</h4><p>Construímos nosso primeiro anel de fibra na região central de São Paulo, conectando bairros como Bela Vista e Jardins com velocidades de até 100 Mbps.</p></div>
-                        </div>
-                        <div class="timeline-item">
-                            <div class="timeline-dot"></div>
-                            <div class="timeline-content"><h4>2019 — Expansão regional</h4><p>Levamos fibra para o interior paulista, alcançando Campinas, Sorocaba e São José dos Campos. Atingimos 100 mil assinantes.</p></div>
-                        </div>
-                        <div class="timeline-item">
-                            <div class="timeline-dot"></div>
-                            <div class="timeline-content"><h4>2021 — Backbone próprio</h4><p>Investimos em um backbone de longa distância ligando São Paulo ao Rio de Janeiro, reduzindo a latência e melhorando a qualidade da conexão.</p></div>
-                        </div>
-                        <div class="timeline-item">
-                            <div class="timeline-dot"></div>
-                            <div class="timeline-content"><h4>2024 — Cobertura nacional</h4><p>Presente em mais de 500 cidades, com mais de 2 milhões de clientes, oferecendo planos de até 1 Gbps.</p></div>
-                        </div>
-                        <div class="timeline-item">
-                            <div class="timeline-dot"></div>
-                            <div class="timeline-content"><h4>2026 — Hoje</h4><p>Continuamos expandindo com fibra de última geração, lançando novos serviços empresariais e mantendo o compromisso com a qualidade.</p></div>
-                        </div>
+                        <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-content"><h4>2015 — Fundação</h4><p>Nasceu em São Paulo com a missão de levar fibra óptica de qualidade a preços justos.</p></div></div>
+                        <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-content"><h4>2017 — Primeira rede metropolitana</h4><p>Anel de fibra na região central de São Paulo com velocidades de até 100 Mbps.</p></div></div>
+                        <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-content"><h4>2019 — Expansão regional</h4><p>Fibra para o interior paulista: Campinas, Sorocaba, São José dos Campos. 100 mil assinantes.</p></div></div>
+                        <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-content"><h4>2021 — Backbone próprio</h4><p>Ligação São Paulo–Rio de Janeiro, reduzindo latência e melhorando qualidade.</p></div></div>
+                        <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-content"><h4>2024 — Cobertura nacional</h4><p>500+ cidades, 2 milhões de clientes, planos de até 1 Gbps.</p></div></div>
+                        <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-content"><h4>2026 — Hoje</h4><p>Expansão com fibra de última geração e novos serviços empresariais.</p></div></div>
                     </div>
                 </section>
             `,
@@ -1048,22 +194,20 @@
                 <div style="background:#fff;border-radius:var(--border-radius);padding:2rem;box-shadow:var(--shadow-card);margin:1rem 0;">
                     <h2 style="color:#1a2639;margin-bottom:1rem;">Termos de Serviço</h2>
                     <div style="width:45px;height:3px;background:#a0c4db;margin-bottom:2rem;"></div>
-                    <p style="margin-bottom:1rem;">Estes Termos de Serviço regem o uso dos serviços de internet fibra da PhoonNet. Ao assinar, você concorda com estes termos.</p>
-                    <p style="margin-bottom:1rem;"><strong>1. Prestação do Serviço:</strong> A PhoonNet fornece conectividade via fibra óptica sujeita à disponibilidade técnica na região.</p>
-                    <p style="margin-bottom:1rem;"><strong>2. Uso Justo:</strong> Planos ilimitados estão sujeitos à política de uso justo. Uso excessivo pode resultar em redução temporária de velocidade em horários de pico.</p>
-                    <p style="margin-bottom:2rem;"><strong>3. Cancelamento:</strong> Planos podem ser cancelados a qualquer momento com aviso prévio de 30 dias. Não há multa por cancelamento antecipado.</p>
-                    <a href="#" data-page="plans" class="plan-btn" style="width:auto;display:inline-block;padding:0.8rem 2rem;">Voltar para Planos</a>
+                    <p><strong>1. Prestação do Serviço:</strong> Fibra óptica sujeita à disponibilidade técnica na região.</p>
+                    <p><strong>2. Uso Justo:</strong> Planos ilimitados com política de uso justo.</p>
+                    <p><strong>3. Cancelamento:</strong> Aviso prévio de 30 dias, sem multa.</p>
+                    <a href="#" data-page="plans" class="plan-btn" style="width:auto;display:inline-block;margin-top:1.5rem;">← Voltar para Planos</a>
                 </div>
             `,
             privacy: `
                 <div style="background:#fff;border-radius:var(--border-radius);padding:2rem;box-shadow:var(--shadow-card);margin:1rem 0;">
                     <h2 style="color:#1a2639;margin-bottom:1rem;">Política de Privacidade</h2>
                     <div style="width:45px;height:3px;background:#a0c4db;margin-bottom:2rem;"></div>
-                    <p style="margin-bottom:1rem;">A PhoonNet respeita sua privacidade. Esta política explica como coletamos e tratamos seus dados.</p>
-                    <p style="margin-bottom:1rem;"><strong>1. Coleta de Dados:</strong> Coletamos apenas as informações necessárias para fornecer e melhorar nossos serviços de internet.</p>
-                    <p style="margin-bottom:1rem;"><strong>2. Compartilhamento:</strong> Não vendemos seus dados pessoais. Dados limitados podem ser compartilhados com parceiros de infraestrutura.</p>
-                    <p style="margin-bottom:2rem;"><strong>3. Seus Direitos:</strong> Você pode solicitar a exclusão ou exportação dos seus dados a qualquer momento.</p>
-                    <a href="#" data-page="plans" class="plan-btn" style="width:auto;display:inline-block;padding:0.8rem 2rem;">Voltar para Planos</a>
+                    <p><strong>1. Coleta de Dados:</strong> Apenas o necessário para fornecer e melhorar os serviços.</p>
+                    <p><strong>2. Compartilhamento:</strong> Não vendemos seus dados pessoais.</p>
+                    <p><strong>3. Seus Direitos:</strong> Solicite exclusão ou exportação dos dados a qualquer momento.</p>
+                    <a href="#" data-page="plans" class="plan-btn" style="width:auto;display:inline-block;margin-top:1.5rem;">← Voltar para Planos</a>
                 </div>
             `
         };
@@ -1101,16 +245,10 @@
         }
         
         function updateActiveNavStates(pageName) {
-            // Apply active class only to nav links (excluding logo)
             document.querySelectorAll('#desktopNav a, .sidebar-nav a, .footer-right a').forEach(link => {
                 const linkPage = link.getAttribute('data-page');
-                if (linkPage === pageName) {
-                    link.classList.add('active-nav');
-                } else {
-                    link.classList.remove('active-nav');
-                }
+                link.classList.toggle('active-nav', linkPage === pageName);
             });
-            // Explicitly ensure logo never gets active class
             const logo = document.querySelector('.nav-logo');
             if (logo) logo.classList.remove('active-nav');
         }
@@ -1122,22 +260,8 @@
         const sidebarClose = document.getElementById('sidebarClose');
         let sidebarOpen = false;
         
-        function openSidebar() {
-            sidebarOpen = true;
-            sidebar.classList.add('active');
-            overlay.classList.add('active');
-            hamburger.classList.add('active');
-            hamburger.setAttribute('aria-expanded', 'true');
-            document.body.style.overflow = 'hidden';
-        }
-        function closeSidebar() {
-            sidebarOpen = false;
-            sidebar.classList.remove('active');
-            overlay.classList.remove('active');
-            hamburger.classList.remove('active');
-            hamburger.setAttribute('aria-expanded', 'false');
-            document.body.style.overflow = '';
-        }
+        function openSidebar() { sidebarOpen = true; sidebar.classList.add('active'); overlay.classList.add('active'); hamburger.classList.add('active'); hamburger.setAttribute('aria-expanded', 'true'); document.body.style.overflow = 'hidden'; }
+        function closeSidebar() { sidebarOpen = false; sidebar.classList.remove('active'); overlay.classList.remove('active'); hamburger.classList.remove('active'); hamburger.setAttribute('aria-expanded', 'false'); document.body.style.overflow = ''; }
         function toggleSidebar() { sidebarOpen ? closeSidebar() : openSidebar(); }
         
         hamburger.addEventListener('click', toggleSidebar);
@@ -1145,19 +269,12 @@
         sidebarClose.addEventListener('click', closeSidebar);
         
         document.querySelectorAll('[data-page]').forEach(el => el.addEventListener('click', handlePageClick));
-        
-        window.addEventListener('popstate', (event) => {
-            loadPage(event.state?.page || 'plans');
-        });
-        
+        window.addEventListener('popstate', (event) => loadPage(event.state?.page || 'plans'));
         document.querySelectorAll('.sidebar-nav a').forEach(link => {
             link.addEventListener('click', () => { if (window.innerWidth <= 768) setTimeout(closeSidebar, 100); });
         });
-        
         window.addEventListener('resize', () => { if (window.innerWidth > 768 && sidebarOpen) closeSidebar(); });
-        
         loadPage('plans');
-        
         document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && sidebarOpen) closeSidebar(); });
     </script>
 </body>
