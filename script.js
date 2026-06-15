@@ -1,15 +1,12 @@
-// --- Conteúdo das páginas (HTML dinâmico) ---
 const pageContent = {
     plans: `
         <section class="section-hero">
-            <p class="hero-eyebrow">Fibra de Alta Velocidade</p>
-            <h1 class="hero-title">Internet além das fronteiras.</h1>
+            <h2 class="section-title">Internet além das fronteiras.</h2>
+            <div class="section-divider" style="margin-left: auto; margin-right: auto;"></div>
             <p class="hero-subtitle">Conexão de fibra óptica de ponta a ponta com preços competitivos. Estabilidade e velocidade para sua casa ou empresa.</p>
-            <div class="hero-accent-line"></div>
             <div class="plans-grid">
                 <article class="plan-card">
                     <span class="plan-badge">Standard</span>
-                    <h3 class="plan-name">Standard</h3>
                     <p class="plan-speed">300 <span class="plan-speed-unit">Mbps</span></p>
                     <p class="plan-price">R$99,90<span>/mês</span></p>
                     <ul class="plan-features">
@@ -22,7 +19,6 @@ const pageContent = {
                 </article>
                 <article class="plan-card featured">
                     <span class="plan-badge">Premium</span>
-                    <h3 class="plan-name">Premium</h3>
                     <p class="plan-speed">600 <span class="plan-speed-unit">Mbps</span></p>
                     <p class="plan-price">R$149,90<span>/mês</span></p>
                     <ul class="plan-features">
@@ -36,7 +32,6 @@ const pageContent = {
                 </article>
                 <article class="plan-card">
                     <span class="plan-badge">Ultra</span>
-                    <h3 class="plan-name">Ultra</h3>
                     <p class="plan-speed">1 <span class="plan-speed-unit">Gbps</span></p>
                     <p class="plan-price">R$249,90<span>/mês</span></p>
                     <ul class="plan-features">
@@ -70,12 +65,11 @@ const pageContent = {
         </section>
     `,
     contact: `
-        <section class="section">
-            <p class="section-label">Entre em Contato</p>
+        <section class="section section-centered">
             <h2 class="section-title">Fale Conosco</h2>
-            <div class="section-divider"></div>
-            <div class="contact-grid">
-                <div class="contact-info-block">
+            <div class="section-divider" style="margin-left: auto; margin-right: auto;"></div>
+            <div class="contact-grid centered-grid">
+                <div class="contact-info-block centered-block">
                     <div class="contact-item">
                         <div class="contact-icon">&#9993;</div>
                         <span>contato@phoonnet.com.br</span>
@@ -90,21 +84,20 @@ const pageContent = {
                     </div>
                     <a href="mailto:contato@phoonnet.com.br" class="contact-cta-btn">Enviar Mensagem</a>
                 </div>
-                <p class="section-body" style="margin-top:0;">
+                <p class="section-body centered-text" style="margin-top:0;">
                     Nossa equipe está disponível 24 horas para ajudar com qualquer dúvida. Seja você um usuário residencial ou empresa, estamos prontos para conectar você.
                 </p>
             </div>
         </section>
     `,
     history: `
-        <section class="section">
-            <p class="section-label">Nossa Trajetória</p>
+        <section class="section section-centered">
             <h2 class="section-title">História da PhoonNet</h2>
-            <div class="section-divider"></div>
-            <p class="section-body">
+            <div class="section-divider" style="margin-left: auto; margin-right: auto;"></div>
+            <p class="section-body centered-text" style="max-width: 800px; margin-left: auto; margin-right: auto;">
                 De uma startup focada em fibra óptica a uma das principais provedoras do país.
             </p>
-            <div class="timeline">
+            <div class="timeline centered-timeline">
                 <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-content"><h4>2015 — Fundação</h4><p>Nasceu em São Paulo com a missão de levar fibra óptica de qualidade.</p></div></div>
                 <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-content"><h4>2017 — Primeira rede metropolitana</h4><p>Anel de fibra na região central de São Paulo.</p></div></div>
                 <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-content"><h4>2019 — Expansão regional</h4><p>Interior paulista: Campinas, Sorocaba, São José dos Campos.</p></div></div>
@@ -115,9 +108,9 @@ const pageContent = {
         </section>
     `,
     terms: `
-        <div style="background:var(--bg-card);border-radius:var(--border-radius);padding:2rem;box-shadow:var(--shadow-card);margin:1rem 0;">
+        <div style="background:var(--bg-card);border-radius:var(--border-radius);padding:2rem;box-shadow:var(--shadow-card);margin:1rem 0; text-align: center;">
             <h2 style="color:var(--text-primary);">Termos de Serviço</h2>
-            <div style="width:45px;height:3px;background:var(--accent-line);margin:1rem 0 2rem;"></div>
+            <div style="width:45px;height:3px;background:var(--accent-line);margin:1rem auto 2rem;"></div>
             <p><strong>1. Prestação do Serviço:</strong> Fibra óptica sujeita à disponibilidade técnica.</p>
             <p><strong>2. Uso Justo:</strong> Planos ilimitados com política de uso justo.</p>
             <p><strong>3. Cancelamento:</strong> Aviso prévio de 30 dias, sem multa.</p>
@@ -125,9 +118,9 @@ const pageContent = {
         </div>
     `,
     privacy: `
-        <div style="background:var(--bg-card);border-radius:var(--border-radius);padding:2rem;box-shadow:var(--shadow-card);margin:1rem 0;">
+        <div style="background:var(--bg-card);border-radius:var(--border-radius);padding:2rem;box-shadow:var(--shadow-card);margin:1rem 0; text-align: center;">
             <h2 style="color:var(--text-primary);">Política de Privacidade</h2>
-            <div style="width:45px;height:3px;background:var(--accent-line);margin:1rem 0 2rem;"></div>
+            <div style="width:45px;height:3px;background:var(--accent-line);margin:1rem auto 2rem;"></div>
             <p><strong>1. Coleta de Dados:</strong> Apenas o necessário para os serviços.</p>
             <p><strong>2. Compartilhamento:</strong> Não vendemos seus dados.</p>
             <p><strong>3. Seus Direitos:</strong> Solicite exclusão ou exportação.</p>
@@ -136,10 +129,13 @@ const pageContent = {
     `
 };
 
-let currentPage = 'plans';
+let currentPage = null;
 
 function loadPage(pageName) {
     if (!pageContent[pageName]) return;
+    // Permite carregar se currentPage for null (primeira vez) OU se for diferente
+    if (currentPage !== null && pageName === currentPage) return;
+    
     const dynamicDiv = document.getElementById('dynamicContent');
     dynamicDiv.classList.add('fade-out');
     setTimeout(() => {
@@ -164,12 +160,14 @@ function attachDynamicEventListeners() {
 function handlePageClick(e) {
     e.preventDefault();
     const page = this.getAttribute('data-page');
-    if (page) loadPage(page);
+    if (page && page !== currentPage) {
+        loadPage(page);
+    }
     if (sidebarOpen) closeSidebar();
 }
 
 function updateActiveNavStates(pageName) {
-    document.querySelectorAll('#desktopNav a, .sidebar-nav a, .footer-right a').forEach(link => {
+    document.querySelectorAll('#desktopNav a, .sidebar-nav a').forEach(link => {
         const linkPage = link.getAttribute('data-page');
         if (linkPage === pageName) {
             link.classList.add('active-nav');
@@ -181,7 +179,7 @@ function updateActiveNavStates(pageName) {
     if (logo) logo.classList.remove('active-nav');
 }
 
-// --- Tema claro/escuro ---
+// Tema claro/escuro
 const themeToggle = document.getElementById('themeToggle');
 function setTheme(theme) {
     if (theme === 'dark') {
@@ -195,7 +193,6 @@ function setTheme(theme) {
     }
 }
 
-// Carregar tema salvo ou preferência do sistema
 const savedTheme = localStorage.getItem('theme');
 if (savedTheme === 'dark') {
     setTheme('dark');
@@ -206,7 +203,7 @@ if (savedTheme === 'dark') {
     setTheme(prefersDark ? 'dark' : 'light');
 }
 
-// --- Sidebar e navegação ---
+// Sidebar
 const sidebar = document.getElementById('sidebar');
 const overlay = document.getElementById('sidebarOverlay');
 const hamburger = document.getElementById('hamburger');
@@ -233,44 +230,35 @@ function toggleSidebar() {
     sidebarOpen ? closeSidebar() : openSidebar();
 }
 
-// --- Inicialização quando o DOM estiver pronto ---
 document.addEventListener('DOMContentLoaded', () => {
-    // Eventos da sidebar
     hamburger.addEventListener('click', toggleSidebar);
     overlay.addEventListener('click', closeSidebar);
     sidebarClose.addEventListener('click', closeSidebar);
 
-    // Evento de clique nos links de navegação (já existentes no HTML)
     document.querySelectorAll('[data-page]').forEach(el => {
         el.addEventListener('click', handlePageClick);
     });
 
-    // Fechar sidebar ao clicar em um link no mobile
     document.querySelectorAll('.sidebar-nav a').forEach(link => {
         link.addEventListener('click', () => {
             if (window.innerWidth <= 768) setTimeout(closeSidebar, 100);
         });
     });
 
-    // Fechar sidebar ao redimensionar para desktop
     window.addEventListener('resize', () => {
         if (window.innerWidth > 768 && sidebarOpen) closeSidebar();
     });
 
-    // Botão de voltar/avançar do navegador
     window.addEventListener('popstate', (event) => {
         loadPage(event.state?.page || 'plans');
     });
 
-    // Tecla ESC fecha sidebar
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && sidebarOpen) closeSidebar();
     });
 
-    // Carregar página inicial
     loadPage('plans');
 
-    // Evento do botão de tema (já existe, mas garantimos o clique)
     themeToggle.addEventListener('click', () => {
         const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
         setTheme(isDark ? 'light' : 'dark');
