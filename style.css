@@ -67,7 +67,6 @@ body {
     flex-direction: column;
     overflow-x: hidden;
     padding-top: 4.5rem;
-    transition: background-color 0.25s ease-in-out, color 0.25s ease-in-out;
 }
 
 .main-content {
@@ -169,7 +168,6 @@ body {
 .sidebar-footer-info a {
     color: var(--text-secondary);
     text-decoration: none;
-    transition: color 0.2s;
 }
 .sidebar-footer-info a:hover {
     color: var(--text-primary);
@@ -571,7 +569,7 @@ body {
     gap: 1rem;
 }
 .footer-left p {
-    margin-bottom: 0;
+    margin-bottom: 0rem;
     color: var(--text-muted);
 }
 .footer-right {
@@ -626,6 +624,7 @@ body,
 .contact-icon,
 .timeline-item,
 .timeline-dot,
+.plan-price span,
 .plan-btn,
 .contact-cta-btn,
 .theme-toggle,
@@ -634,11 +633,11 @@ body,
 .hero-accent-line,
 .footer-right a,
 .sidebar-footer-info a {
-    transition: background-color 0.1s ease-in-out,
-                border-color 0.1s ease-in-out,
-                color 0.1s ease-in-out,
-                box-shadow 0.1s ease-in-out,
-                opacity 0.1s ease-in-out;
+    transition: background-color 0.2s ease-in-out,
+                border-color 0.2s ease-in-out,
+                color 0.2s ease-in-out,
+                box-shadow 0.2s ease-in-out,
+                opacity 0.2s ease-in-out;
 }
 
 /* ===== RESPONSIVO ===== */
