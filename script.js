@@ -80,7 +80,7 @@ const pageContent = {
                     </div>
                     <div class="contact-item">
                         <div class="contact-icon">&#9872;</div>
-                        <span>Sede PhoonNet — Av. Paulista, 8000, São Paulo, SP</span>
+                        <span>Sede PhoonNet - Av. Paulista, 8000, São Paulo, SP</span>
                     </div>
                     <a href="mailto:contato@phoonnet.com.br" class="contact-cta-btn">Enviar Mensagem</a>
                 </div>
