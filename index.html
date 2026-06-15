@@ -40,23 +40,45 @@
             padding: 0;
         }
 
+        /* Force scrollbar always visible to prevent horizontal navbar shift */
         html {
-            font-size: 100%;
+            overflow-y: scroll;
             background-color: var(--bg-deep);
         }
 
+        /* Flex layout to push footer to bottom */
         body {
             font-family: var(--font-stack);
             background-color: var(--bg-deep);
             color: var(--text-primary);
             line-height: 1.6;
             min-height: 100vh;
+            display: flex;
+            flex-direction: column;
             overflow-x: hidden;
             font-weight: 400;
             padding-top: var(--nav-height);
         }
 
-        /* sobreposicao da barra lateral */
+        /* Make main content take remaining space */
+        .main-content {
+            flex: 1 0 auto;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            width: 100%;
+        }
+
+        /* Footer stays at bottom */
+        .site-footer {
+            flex-shrink: 0;
+            border-top: 1px solid #dce5ec;
+            padding: 2.5rem 0;
+            margin-top: 2rem;
+            background: #ffffff;
+        }
+
+        /* Sidebar overlay and panel (unchanged) */
         .sidebar-overlay {
             position: fixed;
             inset: 0;
@@ -72,7 +94,6 @@
             pointer-events: all;
         }
 
-        /* painel da barra lateral */
         .sidebar {
             position: fixed;
             top: 0;
@@ -188,7 +209,7 @@
             cursor: pointer;
         }
 
-        /* barra de navegacao superior - SOLID BACKGROUND */
+        /* Fixed navbar with solid background */
         .navbar {
             position: fixed;
             top: 0;
@@ -221,10 +242,11 @@
             white-space: nowrap;
             cursor: pointer;
         }
-		.nav-logo.active-nav {
-    background: transparent !important;
-    color: #1a2639 !important;
-}
+        /* Ensure logo never gets active styling */
+        .nav-logo.active-nav {
+            background: transparent !important;
+            color: #1a2639 !important;
+        }
         .nav-logo span {
             font-weight: 500;
             color: #5b89a6;
@@ -268,7 +290,6 @@
             color: #ffffff;
         }
 
-        /* hamburger */
         .hamburger {
             display: none;
             width: 2.6rem;
@@ -311,13 +332,6 @@
             transform: rotate(-45deg) translate(2.8px, -2.8px);
         }
 
-        /* conteudo principal */
-        .main-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
         /* Dynamic content area */
         .dynamic-area {
             min-height: 400px;
@@ -337,7 +351,7 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* secao hero e planos */
+        /* section styles (unchanged) */
         .section-hero {
             padding: 2rem 0 2rem;
             text-align: center;
@@ -374,8 +388,6 @@
             border-radius: 2px;
             opacity: 0.8;
         }
-
-        /* cartoes de planos */
         .plans-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -509,8 +521,6 @@
             border-color: #4a758f;
             color: #ffffff;
         }
-
-        /* secao de suporte com imagem */
         .support-showcase {
             display: flex;
             align-items: center;
@@ -575,8 +585,6 @@
             font-weight: 700;
             font-size: 1rem;
         }
-
-        /* secoes gerais */
         .section {
             padding: 2rem 0;
         }
@@ -610,8 +618,6 @@
             letter-spacing: 0.01em;
             line-height: 1.7;
         }
-
-        /* linha do tempo historia */
         .timeline {
             display: flex;
             flex-direction: column;
@@ -644,8 +650,6 @@
             color: #3d516b;
             letter-spacing: 0.01em;
         }
-
-        /* secao contato */
         .contact-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -698,14 +702,6 @@
         .contact-cta-btn:hover {
             background: #4a758f;
         }
-
-        /* rodape */
-        .site-footer {
-            border-top: 1px solid #dce5ec;
-            padding: 2.5rem 0;
-            margin-top: 2rem;
-            background: #ffffff;
-        }
         .footer-inner {
             max-width: 1200px;
             margin: 0 auto;
@@ -750,14 +746,13 @@
             color: #3d516b;
             font-weight: 500;
         }
-
         .active-nav {
             background: #e6f0f7;
             color: #1a2639 !important;
             font-weight: 600;
         }
 
-        /* responsivo */
+        /* Responsive */
         @media (max-width: 900px) {
             .plans-grid {
                 grid-template-columns: 1fr 1fr;
@@ -777,7 +772,6 @@
                 text-align: left;
             }
         }
-
         @media (max-width: 768px) {
             .nav-links {
                 display: none;
@@ -838,7 +832,6 @@
                 --nav-height: 3.8rem;
             }
         }
-
         @media (max-width: 400px) {
             .plan-card {
                 padding: 1.25rem 1rem 1.25rem;
@@ -857,10 +850,8 @@
 </head>
 <body>
 
-    <!-- camada de fundo do menu lateral -->
     <div class="sidebar-overlay" id="sidebarOverlay" aria-hidden="true"></div>
 
-    <!-- painel do menu lateral -->
     <aside class="sidebar" id="sidebar" aria-label="Navegacao mobile">
         <div class="sidebar-header">
             <a href="#" class="sidebar-logo" data-page="plans">Phoon<span>Net</span></a>
@@ -880,7 +871,6 @@
         </div>
     </aside>
 
-    <!-- barra de navegacao superior -->
     <header class="navbar" id="navbar">
         <div class="navbar-inner">
             <a href="#" class="nav-logo" data-page="plans">Phoon<span>Net</span></a>
@@ -900,14 +890,10 @@
         </div>
     </header>
 
-    <!-- conteudo principal - dynamic area -->
     <main class="main-content">
-        <div id="dynamicContent" class="dynamic-area">
-            <!-- Content will be dynamically loaded here -->
-        </div>
+        <div id="dynamicContent" class="dynamic-area"></div>
     </main>
 
-    <!-- rodape -->
     <footer class="site-footer">
         <div class="footer-inner">
             <div class="footer-left">
@@ -925,7 +911,6 @@
     </footer>
 
     <script>
-        // Content definitions - each page's HTML
         const pageContent = {
             plans: `
                 <section class="section-hero">
@@ -933,7 +918,6 @@
                     <h1 class="hero-title">Internet além das fronteiras.</h1>
                     <p class="hero-subtitle">Conexão de fibra óptica de ponta a ponta com preços competitivos. Estabilidade e velocidade para sua casa ou empresa.</p>
                     <div class="hero-accent-line"></div>
-
                     <div class="plans-grid">
                         <article class="plan-card">
                             <span class="plan-badge">Standard</span>
@@ -948,7 +932,6 @@
                             </ul>
                             <a href="#" data-page="contact" class="plan-btn">Escolher Plano</a>
                         </article>
-
                         <article class="plan-card featured">
                             <span class="plan-badge">Premium</span>
                             <h3 class="plan-name">Premium</h3>
@@ -963,7 +946,6 @@
                             </ul>
                             <a href="#" data-page="contact" class="plan-btn primary-btn">Escolher Plano</a>
                         </article>
-
                         <article class="plan-card">
                             <span class="plan-badge">Ultra</span>
                             <h3 class="plan-name">Ultra</h3>
@@ -979,7 +961,6 @@
                             <a href="#" data-page="contact" class="plan-btn">Escolher Plano</a>
                         </article>
                     </div>
-
                     <div class="support-showcase">
                         <div class="support-image">
                             <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?w=600&h=400&fit=crop&auto=format" 
@@ -1000,7 +981,6 @@
                     </div>
                 </section>
             `,
-            
             contact: `
                 <section class="section">
                     <p class="section-label">Entre em Contato</p>
@@ -1028,7 +1008,6 @@
                     </div>
                 </section>
             `,
-            
             history: `
                 <section class="section">
                     <p class="section-label">Nossa Trajetória</p>
@@ -1040,50 +1019,31 @@
                     <div class="timeline">
                         <div class="timeline-item">
                             <div class="timeline-dot"></div>
-                            <div class="timeline-content">
-                                <h4>2015 — Fundação</h4>
-                                <p>A PhoonNet nasceu em São Paulo com a missão de levar fibra óptica de qualidade a preços justos. Os engenheiros Lucas Andrade e Mariana Rocha montaram a primeira central em uma sala comercial na Paulista.</p>
-                            </div>
+                            <div class="timeline-content"><h4>2015 — Fundação</h4><p>A PhoonNet nasceu em São Paulo com a missão de levar fibra óptica de qualidade a preços justos. Os engenheiros Lucas Andrade e Mariana Rocha montaram a primeira central em uma sala comercial na Paulista.</p></div>
                         </div>
                         <div class="timeline-item">
                             <div class="timeline-dot"></div>
-                            <div class="timeline-content">
-                                <h4>2017 — Primeira rede metropolitana</h4>
-                                <p>Construímos nosso primeiro anel de fibra na região central de São Paulo, conectando bairros como Bela Vista e Jardins com velocidades de até 100 Mbps.</p>
-                            </div>
+                            <div class="timeline-content"><h4>2017 — Primeira rede metropolitana</h4><p>Construímos nosso primeiro anel de fibra na região central de São Paulo, conectando bairros como Bela Vista e Jardins com velocidades de até 100 Mbps.</p></div>
                         </div>
                         <div class="timeline-item">
                             <div class="timeline-dot"></div>
-                            <div class="timeline-content">
-                                <h4>2019 — Expansão regional</h4>
-                                <p>Levamos fibra para o interior paulista, alcançando Campinas, Sorocaba e São José dos Campos. Atingimos 100 mil assinantes.</p>
-                            </div>
+                            <div class="timeline-content"><h4>2019 — Expansão regional</h4><p>Levamos fibra para o interior paulista, alcançando Campinas, Sorocaba e São José dos Campos. Atingimos 100 mil assinantes.</p></div>
                         </div>
                         <div class="timeline-item">
                             <div class="timeline-dot"></div>
-                            <div class="timeline-content">
-                                <h4>2021 — Backbone próprio</h4>
-                                <p>Investimos em um backbone de longa distância ligando São Paulo ao Rio de Janeiro, reduzindo a latência e melhorando a qualidade da conexão.</p>
-                            </div>
+                            <div class="timeline-content"><h4>2021 — Backbone próprio</h4><p>Investimos em um backbone de longa distância ligando São Paulo ao Rio de Janeiro, reduzindo a latência e melhorando a qualidade da conexão.</p></div>
                         </div>
                         <div class="timeline-item">
                             <div class="timeline-dot"></div>
-                            <div class="timeline-content">
-                                <h4>2024 — Cobertura nacional</h4>
-                                <p>Presente em mais de 500 cidades, com mais de 2 milhões de clientes, oferecendo planos de até 1 Gbps.</p>
-                            </div>
+                            <div class="timeline-content"><h4>2024 — Cobertura nacional</h4><p>Presente em mais de 500 cidades, com mais de 2 milhões de clientes, oferecendo planos de até 1 Gbps.</p></div>
                         </div>
                         <div class="timeline-item">
                             <div class="timeline-dot"></div>
-                            <div class="timeline-content">
-                                <h4>2026 — Hoje</h4>
-                                <p>Continuamos expandindo com fibra de última geração, lançando novos serviços empresariais e mantendo o compromisso com a qualidade.</p>
-                            </div>
+                            <div class="timeline-content"><h4>2026 — Hoje</h4><p>Continuamos expandindo com fibra de última geração, lançando novos serviços empresariais e mantendo o compromisso com a qualidade.</p></div>
                         </div>
                     </div>
                 </section>
             `,
-            
             terms: `
                 <div style="background:#fff;border-radius:var(--border-radius);padding:2rem;box-shadow:var(--shadow-card);margin:1rem 0;">
                     <h2 style="color:#1a2639;margin-bottom:1rem;">Termos de Serviço</h2>
@@ -1095,7 +1055,6 @@
                     <a href="#" data-page="plans" class="plan-btn" style="width:auto;display:inline-block;padding:0.8rem 2rem;">Voltar para Planos</a>
                 </div>
             `,
-            
             privacy: `
                 <div style="background:#fff;border-radius:var(--border-radius);padding:2rem;box-shadow:var(--shadow-card);margin:1rem 0;">
                     <h2 style="color:#1a2639;margin-bottom:1rem;">Política de Privacidade</h2>
@@ -1113,22 +1072,14 @@
         
         function loadPage(pageName) {
             if (!pageContent[pageName]) return;
-            
             const dynamicDiv = document.getElementById('dynamicContent');
-            
             dynamicDiv.classList.add('fade-out');
-            
             setTimeout(() => {
                 dynamicDiv.innerHTML = pageContent[pageName];
                 currentPage = pageName;
-                
                 dynamicDiv.classList.remove('fade-out');
                 dynamicDiv.classList.add('fade-in');
-                
-                setTimeout(() => {
-                    dynamicDiv.classList.remove('fade-in');
-                }, 350);
-                
+                setTimeout(() => dynamicDiv.classList.remove('fade-in'), 350);
                 attachDynamicEventListeners();
                 updateActiveNavStates(pageName);
                 history.pushState({ page: pageName }, '', `#${pageName}`);
@@ -1145,29 +1096,24 @@
         function handlePageClick(e) {
             e.preventDefault();
             const page = this.getAttribute('data-page');
-            if (page) {
-                loadPage(page);
-            }
-            if (typeof sidebarOpen !== 'undefined' && sidebarOpen) {
-                closeSidebar();
-            }
+            if (page) loadPage(page);
+            if (sidebarOpen) closeSidebar();
         }
         
-		function updateActiveNavStates(pageName) {
-			// Apply active class to nav links, but NOT to the logo
-			document.querySelectorAll('#desktopNav a, .sidebar-nav a, .footer-right a').forEach(link => {
-				const linkPage = link.getAttribute('data-page');
-				if (linkPage === pageName) {
-					link.classList.add('active-nav');
-				} else {
-					link.classList.remove('active-nav');
-				}
-			});
-			
-			// Remove any active-nav class from the logo if it somehow got it
-			const logo = document.querySelector('.nav-logo');
-			if (logo) logo.classList.remove('active-nav');
-		}
+        function updateActiveNavStates(pageName) {
+            // Apply active class only to nav links (excluding logo)
+            document.querySelectorAll('#desktopNav a, .sidebar-nav a, .footer-right a').forEach(link => {
+                const linkPage = link.getAttribute('data-page');
+                if (linkPage === pageName) {
+                    link.classList.add('active-nav');
+                } else {
+                    link.classList.remove('active-nav');
+                }
+            });
+            // Explicitly ensure logo never gets active class
+            const logo = document.querySelector('.nav-logo');
+            if (logo) logo.classList.remove('active-nav');
+        }
         
         // Sidebar logic
         const sidebar = document.getElementById('sidebar');
@@ -1184,7 +1130,6 @@
             hamburger.setAttribute('aria-expanded', 'true');
             document.body.style.overflow = 'hidden';
         }
-        
         function closeSidebar() {
             sidebarOpen = false;
             sidebar.classList.remove('active');
@@ -1193,58 +1138,27 @@
             hamburger.setAttribute('aria-expanded', 'false');
             document.body.style.overflow = '';
         }
-        
-        function toggleSidebar() {
-            if (sidebarOpen) {
-                closeSidebar();
-            } else {
-                openSidebar();
-            }
-        }
+        function toggleSidebar() { sidebarOpen ? closeSidebar() : openSidebar(); }
         
         hamburger.addEventListener('click', toggleSidebar);
         overlay.addEventListener('click', closeSidebar);
         sidebarClose.addEventListener('click', closeSidebar);
         
-        // Attach navigation listeners to static elements
-        document.querySelectorAll('[data-page]').forEach(el => {
-            el.addEventListener('click', handlePageClick);
-        });
+        document.querySelectorAll('[data-page]').forEach(el => el.addEventListener('click', handlePageClick));
         
-        // Handle back/forward browser buttons
         window.addEventListener('popstate', (event) => {
-            if (event.state && event.state.page) {
-                loadPage(event.state.page);
-            } else {
-                loadPage('plans');
-            }
+            loadPage(event.state?.page || 'plans');
         });
         
-        // Close sidebar when clicking on mobile nav links
         document.querySelectorAll('.sidebar-nav a').forEach(link => {
-            link.addEventListener('click', () => {
-                if (window.innerWidth <= 768) {
-                    setTimeout(closeSidebar, 100);
-                }
-            });
+            link.addEventListener('click', () => { if (window.innerWidth <= 768) setTimeout(closeSidebar, 100); });
         });
         
-        // Close sidebar on window resize
-        window.addEventListener('resize', function() {
-            if (window.innerWidth > 768 && sidebarOpen) {
-                closeSidebar();
-            }
-        });
+        window.addEventListener('resize', () => { if (window.innerWidth > 768 && sidebarOpen) closeSidebar(); });
         
-        // Load initial page
         loadPage('plans');
         
-        // Handle ESC key
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape' && sidebarOpen) {
-                closeSidebar();
-            }
-        });
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && sidebarOpen) closeSidebar(); });
     </script>
 </body>
 </html>
