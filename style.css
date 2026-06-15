@@ -389,6 +389,9 @@ body {
     margin: 0.75rem 0;
     color: var(--text-primary);
 }
+.plan-price span {
+    display: inline-block;              /* ajuda na transição em mobile */
+}
 .plan-features {
     list-style: none;
     padding-left: 0;
